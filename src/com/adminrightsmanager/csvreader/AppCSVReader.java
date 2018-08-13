@@ -10,15 +10,40 @@ import java.util.Vector;
 import com.adminrightsmanager.taskmanager.ConcreteTask;
 import com.adminrightsmanager.taskmanager.Task;
 
+/**
+ * The Class AppCSVReader.
+ */
 public class AppCSVReader extends ConcreteTask {
+
+	/** The br. */
 	BufferedReader br = null;
+
+	/** The line. */
 	String line = "";
+
+	/** The cvs split by. */
 	String cvsSplitBy = ",";
+
+	/** The vector. */
 	Vector<Task> vector = new Vector<Task>();
 
+	/**
+	 * Instantiates a new app CSV reader.
+	 *
+	 * @param csvFile
+	 *            the csv file
+	 * @throws Exception
+	 *             the exception
+	 */
 	public AppCSVReader(String csvFile) throws Exception {
 		br = new BufferedReader(new FileReader(csvFile));
 	}
+
+	/**
+	 * Read CSV.
+	 *
+	 * @return the vector
+	 */
 	public Vector<Task> readCSV() {
 		Boolean addTaskFlag = false;
 		Boolean notNullValueInCsvFlag = false;
@@ -58,8 +83,7 @@ public class AppCSVReader extends ConcreteTask {
 							vector.add(newTask);
 							System.out.println(
 									"need to add task for:" + newTask.getHostName());
-						} 
-						else {
+						} else {
 							System.out.println(
 									"need to Skip task for:" + newTask.getHostName());
 						}
@@ -86,6 +110,14 @@ public class AppCSVReader extends ConcreteTask {
 		}
 		return vector;
 	}
+
+	/**
+	 * Read raw data from CSV.
+	 *
+	 * @return the vector
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 */
 	public Vector<Task> readRawDataFromCSV() throws FileNotFoundException {
 		Boolean notNullValueInCsvFlag = false;
 		try {
@@ -135,6 +167,13 @@ public class AppCSVReader extends ConcreteTask {
 		}
 		return vector;
 	}
+
+	/**
+	 * Prints the list.
+	 *
+	 * @param vector
+	 *            the vector
+	 */
 	public void printList(Vector<Task> vector) {
 		for (int i = 0; i < vector.size(); i++) {
 			System.out.println("" + vector.get(i).getHostName() + " , "
@@ -143,6 +182,14 @@ public class AppCSVReader extends ConcreteTask {
 					+ "]");
 		}
 	}
+
+	/**
+	 * Check values should not contains null.
+	 *
+	 * @param csvColumn
+	 *            the csv column
+	 * @return the boolean
+	 */
 	public static Boolean checkValuesShouldNotContainsNull(String[] csvColumn) {
 		Boolean checkFlag = true;
 		if (csvColumn[0] == null) {
@@ -163,6 +210,16 @@ public class AppCSVReader extends ConcreteTask {
 		}
 		return checkFlag;
 	}
+
+	/**
+	 * Check task to be added or not.
+	 *
+	 * @param task
+	 *            the task
+	 * @return the boolean
+	 * @throws ParseException
+	 *             the parse exception
+	 */
 	public static Boolean checkTaskToBeAddedOrNot(ConcreteTask task)
 			throws ParseException {
 		Boolean flag = false;
@@ -173,9 +230,10 @@ public class AppCSVReader extends ConcreteTask {
 			// the rights should be added if granted column is null
 			// and if granted column is not null then don't add this task to vector
 			// as end date is before present date
-			if (task.getGrantedDate().toString().isEmpty() | task.getGrantedDate() ==null) {
+			if (task.getGrantedDate().toString().isEmpty()
+					| task.getGrantedDate() == null) {
 				flag = true;
-				System.out.println("====Remove rights for==== :"+task.getHostName());
+				System.out.println("Remove rights for :" + task.getHostName());
 				task.setCommandString("remove");
 			} else {
 				flag = false;
@@ -184,10 +242,11 @@ public class AppCSVReader extends ConcreteTask {
 				&& mPresentDate.before(mEndDateFromUser)) {
 			// rights is to be added in future for this entry hence make flag as false
 			// not to add entry into vector
-			if (task.getRevokedDate().toString().isEmpty() | task.getRevokedDate() == null) {
+			if (task.getRevokedDate().toString().isEmpty()
+					| task.getRevokedDate() == null) {
 				flag = true;
 				task.setCommandString("remove");
-				System.out.println("====Remove rights for==== :"+task.getHostName());
+				System.out.println("Remove rights for :" + task.getHostName());
 			} else {
 				flag = false;
 			}
@@ -198,7 +257,7 @@ public class AppCSVReader extends ConcreteTask {
 			// present date hence marking flag as true
 			flag = true;
 			task.setCommandString("add");
-			System.out.println("===Add rights for=== :"+task.getHostName());
+			System.out.println("Add rights for :" + task.getHostName());
 
 		} else if (mPresentDate.after(mStartDateFromUser)
 				&& mPresentDate.equals(mEndDateFromUser)) {
@@ -206,7 +265,7 @@ public class AppCSVReader extends ConcreteTask {
 			// so rights have to remove and task needs to be added in vector
 			flag = true;
 			task.setCommandString("add");
-			System.out.println("===Add rights for=== :"+task.getHostName());
+			System.out.println("Add rights for :" + task.getHostName());
 		} else if (mPresentDate.after(mStartDateFromUser)
 				&& mPresentDate.after(mEndDateFromUser)) {
 			// if start date and end date is in past the entry is old
@@ -214,10 +273,11 @@ public class AppCSVReader extends ConcreteTask {
 
 			// the end date of user is in past but and revoked column contains revoked
 			// date if not then flag should be true to add task into queue
-			if (task.getRevokedDate().toString().isEmpty() | task.getRevokedDate() == null) {
+			if (task.getRevokedDate().toString().isEmpty()
+					| task.getRevokedDate() == null) {
 				flag = true;
 				task.setCommandString("remove");
-				System.out.println("====Remove rights for==== :"+task.getHostName());
+				System.out.println("Remove rights for :" + task.getHostName());
 			} else {
 				flag = false;
 			}
@@ -229,7 +289,14 @@ public class AppCSVReader extends ConcreteTask {
 		return flag;
 	}
 
-	
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 * @throws Exception
+	 *             the exception
+	 */
 	public static void main(String args[]) throws Exception {
 
 		AppCSVReader readobj = new AppCSVReader(".\\test.csv");

@@ -1,6 +1,5 @@
 package com.adminrightsmanager.csvreader;
 
-import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -9,14 +8,28 @@ import java.io.IOException;
 import java.util.Vector;
 
 import com.adminrightsmanager.app.App;
-import com.adminrightsmanager.csvreader.AppCSVReader;
-
 import com.adminrightsmanager.taskmanager.Task;
 
+/**
+ * The Class AppCSVWriter.
+ */
 public class AppCSVWriter {
+
+	/** The file. */
 	File file = null;
+
+	/** The bw. */
 	BufferedWriter bw = null;
+
+	/** The fw. */
 	FileWriter fw = null;
+
+	/**
+	 * Instantiates a new app CSV writer.
+	 *
+	 * @param fileName
+	 *            the file name
+	 */
 	public AppCSVWriter(String fileName) {
 		file = new File(fileName);
 		try {
@@ -35,6 +48,19 @@ public class AppCSVWriter {
 			e.printStackTrace();
 		}
 	}
+
+	/**
+	 * Merge test and processed csv.
+	 *
+	 * @param pickupFileName
+	 *            the pickup file name
+	 * @param processedFileName
+	 *            the processed file name
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws Exception
+	 *             the exception
+	 */
 	public void mergeTestAndProcessedCsv(String pickupFileName, String processedFileName)
 			throws FileNotFoundException, Exception {
 		Vector<Task> pickUpVector = new Vector<Task>();
@@ -55,14 +81,14 @@ public class AppCSVWriter {
 			for (int i = 0; i < pickUpVector.size(); i++) {
 
 				for (int j = 0; j < processedVector.size(); j++) {
-					 System.out.println(
-					 "Processed::::" + processedVector.get(j).getHostName()
-					 + " , " + processedVector.get(j).getIpAddress()
-					 + " , " + processedVector.get(j).getStartDate()
-					 + " , " + processedVector.get(j).getEndDate() + " , "
-					 + processedVector.get(j).getGrantedDate() + " , "
-					 + processedVector.get(j).getRevokedDate() + " , "
-					 + processedVector.get(j).getxOS());
+					System.out.println(
+							"Processed::::" + processedVector.get(j).getHostName() + " , "
+									+ processedVector.get(j).getIpAddress() + " , "
+									+ processedVector.get(j).getStartDate() + " , "
+									+ processedVector.get(j).getEndDate() + " , "
+									+ processedVector.get(j).getGrantedDate() + " , "
+									+ processedVector.get(j).getRevokedDate() + " , "
+									+ processedVector.get(j).getxOS());
 					if (pickUpVector.get(i).getHostName().toString()
 							.equals(processedVector.get(j).getHostName().toString())) {
 
@@ -82,17 +108,16 @@ public class AppCSVWriter {
 					}
 
 				}
-				 System.out.println("Pickup::::" + pickUpVector.get(i).getHostName() + " , "
-				 + pickUpVector.get(i).getIpAddress() + " , "
-				 + pickUpVector.get(i).getStartDate() + " , "
-				 + pickUpVector.get(i).getEndDate() + " , "
-				 + pickUpVector.get(i).getGrantedDate() + " , "
-				 + pickUpVector.get(i).getRevokedDate() + " , "
-				 + pickUpVector.get(i).getxOS());
+				System.out.println("Pickup::::" + pickUpVector.get(i).getHostName()
+						+ " , " + pickUpVector.get(i).getIpAddress() + " , "
+						+ pickUpVector.get(i).getStartDate() + " , "
+						+ pickUpVector.get(i).getEndDate() + " , "
+						+ pickUpVector.get(i).getGrantedDate() + " , "
+						+ pickUpVector.get(i).getRevokedDate() + " , "
+						+ pickUpVector.get(i).getxOS());
 			}
 
 			for (int i = 0; i < pickUpVector.size(); i++) {
-				System.out.println("Processing Csv from AppCSVWriter");
 				recordData = pickUpVector.get(i).getHostName().toString() + ","
 						+ pickUpVector.get(i).getIpAddress().toString() + ","
 						+ pickUpVector.get(i).getStartDate().toString() + ","
@@ -126,6 +151,17 @@ public class AppCSVWriter {
 		}
 
 	}
+
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws Exception
+	 *             the exception
+	 */
 	public static void main(String[] args) throws FileNotFoundException, Exception {
 		AppCSVWriter wrt = new AppCSVWriter(".\\testnew.csv");
 		wrt.mergeTestAndProcessedCsv(".\\test.csv", ".\\processedCsv.csv");

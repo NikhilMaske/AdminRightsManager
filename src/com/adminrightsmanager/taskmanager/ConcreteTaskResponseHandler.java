@@ -6,15 +6,28 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import com.adminrightsmanager.app.App;
-import com.adminrightsmanager.csvreader.AppCSVWriter;
 import com.adminrightsmanager.csvreader.AuditLogger;
 
+/**
+ * The Class ConcreteTaskResponseHandler.
+ */
 public class ConcreteTaskResponseHandler implements TaskResponseHandler {
 
+	/** The bw. */
 	BufferedWriter bw = null;
+
+	/** The fw. */
 	FileWriter fw = null;
+
+	/** The processed file. */
 	File processedFile = null;
 
+	/**
+	 * Instantiates a new concrete task response handler.
+	 *
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public ConcreteTaskResponseHandler() throws IOException {
 		processedFile = new File(App.ProcessedFILENAME);
 		// if file doesnt exists, then create it
@@ -29,6 +42,15 @@ public class ConcreteTaskResponseHandler implements TaskResponseHandler {
 		bw.close();
 		fw.close();
 	}
+
+	/**
+	 * Extract data and insert into csv.
+	 *
+	 * @param task
+	 *            the task
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 */
 	public void extractDataAndInsertIntoCsv(Task task) throws IOException {
 
 		String recordData = task.getHostName().toString() + ","
@@ -65,9 +87,16 @@ public class ConcreteTaskResponseHandler implements TaskResponseHandler {
 		}
 
 	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * com.adminrightsmanager.taskmanager.TaskResponseHandler#handleResponse(com.
+	 * adminrightsmanager.taskmanager.Task, java.lang.String)
+	 */
 	@Override
 	public void handleResponse(Task task, String result) {
-		
+
 		System.out.println("Handling response for...");
 		System.out.println(task.getHostName());
 		System.out.println(result);

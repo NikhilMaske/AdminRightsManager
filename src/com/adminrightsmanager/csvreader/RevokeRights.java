@@ -8,13 +8,38 @@ import java.util.Vector;
 import com.adminrightsmanager.taskmanager.ConcreteTask;
 import com.adminrightsmanager.taskmanager.Task;
 
+/**
+ * The Class RevokeRights.
+ */
 public class RevokeRights {
+
+	/** The sdf. */
 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+
+	/** The m present date. */
 	Date mPresentDate = DateFunctions.setTimeToMidnight(Calendar.getInstance().getTime());
+
+	/** The m end date from user. */
 	Date mEndDateFromUser = null;
+
+	/** The current vector. */
 	Vector<Task> currentVector = null;
+
+	/** The m list of host name. */
 	Vector<Task> mListOfHostName = new Vector<Task>();
+
+	/** The m task. */
 	ConcreteTask mTask = new ConcreteTask();
+
+	/**
+	 * Gets the revoke rights user list.
+	 *
+	 * @param getVector
+	 *            the get vector
+	 * @return the revoke rights user list
+	 * @throws Exception
+	 *             the exception
+	 */
 	public Vector<Task> getRevokeRightsUserList(Vector<Task> getVector) throws Exception {
 		currentVector = getVector;
 		System.out.println("Date instance:::::::::::" + (mPresentDate) + "\n\n");
@@ -55,6 +80,15 @@ public class RevokeRights {
 		return mListOfHostName;
 	}
 
+	/**
+	 * Gets the invoke rights user list.
+	 *
+	 * @param getVector
+	 *            the get vector
+	 * @return the invoke rights user list
+	 * @throws Exception
+	 *             the exception
+	 */
 	public Vector<Task> getInvokeRightsUserList(Vector<Task> getVector) throws Exception {
 		currentVector = getVector;
 		System.out.println("Date instance:::::::::::" + (mPresentDate) + "\n\n");
@@ -94,6 +128,15 @@ public class RevokeRights {
 		}
 		return mListOfHostName;
 	}
+
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 * @throws Exception
+	 *             the exception
+	 */
 	public static void main(String args[]) throws Exception {
 		RevokeRights r = new RevokeRights();
 		AppCSVReader csvReaderObject = new AppCSVReader(".\\test.csv");

@@ -13,8 +13,20 @@ import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
+/**
+ * The Class SwingFirstExample.
+ */
 public class SwingFirstExample {
+
+	/** The host name input text. */
 	static JTextField hostNameInputText = new JTextField(20);
+
+	/**
+	 * The main method.
+	 *
+	 * @param args
+	 *            the arguments
+	 */
 	public static void main(String[] args) {
 		JFrame frame = new JFrame("Rights Manager");
 
@@ -37,6 +49,12 @@ public class SwingFirstExample {
 		frame.setVisible(true);
 	}
 
+	/**
+	 * Place components.
+	 *
+	 * @param panel
+	 *            the panel
+	 */
 	private static void placeComponents(JPanel panel) {
 		panel.setLayout(null);
 
@@ -93,7 +111,7 @@ public class SwingFirstExample {
 
 		checkRightsButton.setBounds(240, 150, 100, 25);
 		panel.add(checkRightsButton);
-		
+
 		addRightsButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				JOptionPane.showMessageDialog(null,
